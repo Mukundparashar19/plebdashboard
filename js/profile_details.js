@@ -76,7 +76,24 @@ function displayNodeDetails(node) {
                     </div>
                     <div class="mt-2 ml-2" id="qrcode"></div>
                 </div>
-            
+
+
+                
+  <div class="text-dark">
+    
+      <p class="card-text mb-0">
+        <small>Total Cap: ${Math.round(node.Total_Capacity)}</small>
+      </p>
+      <p class="card-text mb-0">
+        <small>Count of Channel: ${Math.round(node.Channel_Count_Rank)}</small>
+      </p>
+      <p class="card-text mb-0">
+        <small>Channel Rank: ${node.Total_Channels_Rank}</small>
+      </p>
+    
+  </div>
+
+        
         </div>
 
         <div class="col-md-8 mb-3">
@@ -115,7 +132,7 @@ function displayNodeDetails(node) {
     <div class="col-md-5">
         <div class="card shadow h-100">
             <div class="card-body">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">First Seen</div>
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">First Seen (birth transaction)</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                     `;
 
@@ -128,7 +145,7 @@ function displayNodeDetails(node) {
         const block = birthTx.block || 'N/A';
         const tx = birthTx.tx || 'N/A';
         const output = birthTx.output || 'N/A';
-        html += `Transaction: Block ${block}, Tx ${tx}, Output ${output}`;
+        html += `${block}, ${tx}, ${output}`;
     } else {
         html += 'Transaction: N/A';
     }
@@ -156,6 +173,7 @@ function displayNodeDetails(node) {
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const pubKey = urlParams.get('pub_key');
+    const alias = urlParams.get('alias');
 
     if (!pubKey) {
         document.getElementById('nodeDetails').innerHTML = '<p>No pub_key provided.</p>';
@@ -168,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Papa.parse(csvData, {
                 header: true,
                 complete: function (results) {
-                    const node = results.data.find(row => row.pub_key === pubKey);
+                    const node = results.data.find(row => row.pub_key === pubKey || row.alias === alias);
                     if (node) {
                         displayNodeDetails(node); 
                         appendTables(node); // Call to append the tables

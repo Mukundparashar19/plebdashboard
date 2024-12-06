@@ -132,7 +132,7 @@
                   let cell = row.insertCell();
                   if (index === 3) { // Assuming the alias/pub key is the fourth column
                     //   cell.innerHTML = `<a href="profile_details.html?alias=${encodeURIComponent(val)}" target="_blank">${val}</a>`;
-                      cell.innerHTML = `<a href="profile_details.html?pubkey=${encodeURIComponent(val)}" target="_blank">${val}</a>`;
+                      cell.innerHTML = `<a href="profile_details.html?alias=${encodeURIComponent(val)}" target="_blank">${val}</a>`;
 
                   } else {
                       cell.textContent = val;
